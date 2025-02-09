@@ -3,7 +3,7 @@
 
 # Ignore .env in all folders
 **/.env
-**/.dist
+**/.dist/
 # MacOS system files
 .DS_Store
 
