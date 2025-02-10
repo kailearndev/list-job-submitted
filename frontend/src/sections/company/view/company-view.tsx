@@ -117,11 +117,8 @@ export function CompanyView() {
                     />
                   ))}
 
-                <TableEmptyRows
-                  height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
-                />
-                {isPending && <CircularProgress />}
+
+
                 {!data?.data.length && <TableNoData searchQuery='' />}
               </TableBody>
             </Table>
