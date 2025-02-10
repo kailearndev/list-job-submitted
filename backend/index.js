@@ -19,15 +19,23 @@ const app = express()
 app.use(morgan("dev"))
 app.use(express.json())
 
+const allowedOrigins = ["https://fe.list-job.kaidev.io.vn"];
 
-app.use(cors({
-    credentials: true,
-    origin: "https://fe.list-job.kaidev.io.vn", // Cho phép mọi origin
-    optionsSuccessStatus: 200, //
-}));
-const PORT = process.env.PORT || 9000
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true, // Cho phép gửi cookie hoặc thông tin xác thực
+};
 
-//connect db
+app.use(cors(corsOptions));
+
+// Nếu frontend gửi preflight request (OPTIONS), xử lý:
+app.options("*", cors(corsOptions));
 
 dbConnection()
 
