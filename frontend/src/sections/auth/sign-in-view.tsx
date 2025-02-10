@@ -13,13 +13,15 @@ import { useRouter } from 'src/routes/hooks';
 
 import { Iconify } from 'src/components/iconify';
 import { AuthService } from 'src/services/auth';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import { Button } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 interface LoginPayload {
   username: string
   password: string
+  confirmPassword: string
 }
 
 
@@ -27,12 +29,18 @@ export function SignInView() {
 
 
   const router = useRouter();
-  const [loginValue, setLoginValue] = useState<LoginPayload>({
+  const [loginValue, setLoginValue] = useState<Omit<LoginPayload, "confirmPassword">>({
     username: "",
     password: ""
   })
+  const [signupValue, setSignupValue] = useState<LoginPayload>({
+    username: "",
+    password: "",
+    confirmPassword: ""
+  })
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const handleSignIn = async () => {
     const response = await AuthService.login(loginValue)
@@ -51,6 +59,32 @@ export function SignInView() {
     }
 
   }
+  const handleConfirmPassword = () => {
+    return signupValue.password === signupValue.confirmPassword ? true : false
+  }
+
+  const handleSignUp = async () => {
+    const response: any = await AuthService.signup(signupValue)
+
+    if (response) {
+      toast.success("Tạo tài khoản thành công ", {
+        position: "top-right"
+      })
+      setSignupValue({
+        password: "",
+        confirmPassword: "",
+        username: ""
+      })
+      router.push("/login")
+    }
+
+    else {
+      toast.error("User tồn tại hoặc sai mật khẩu", {
+        position: "top-right"
+      })
+    }
+
+  }
 
   const renderForm = (
     <Box display="flex" flexDirection="column" alignItems="flex-end">
@@ -63,7 +97,7 @@ export function SignInView() {
           })
         }}
         name="username"
-        label="Username"
+        label="Tên đăng nhập"
         value={loginValue.username}
         InputLabelProps={{ shrink: true }}
         sx={{ mb: 3 }}
@@ -76,7 +110,7 @@ export function SignInView() {
       <TextField
         fullWidth
         name="password"
-        label="Password"
+        label="Mật khẩu"
         value={loginValue.password}
         onChange={(e) => {
           setLoginValue({
@@ -106,47 +140,126 @@ export function SignInView() {
         variant="contained"
         onClick={handleSignIn}
       >
-        Sign in
+        Đăng nhập
       </LoadingButton>
 
     </Box>
   );
+  const renderFormSignUp = (
+    <Box display="flex" flexDirection="column" alignItems="flex-end">
+      <TextField
+        fullWidth
+        onChange={(e) => {
+          setSignupValue({
+            ...signupValue,
+            username: e.target.value
+          })
+        }}
+        name="username"
+        label="Tên đăng nhập"
+        value={signupValue.username}
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
 
+
+
+      <TextField
+        fullWidth
+        name="password"
+        label="Mật Khẩu"
+        value={signupValue.password}
+        onChange={(e) => {
+          setSignupValue({
+            ...signupValue,
+            password: e.target.value
+          })
+        }}
+        InputLabelProps={{ shrink: true }}
+        type={showPassword ? 'text' : 'password'}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        sx={{ mb: 3 }}
+      />
+
+      <TextField
+        fullWidth
+        name="confirmPassword"
+        label="Nhập lại mật khẩu"
+        value={signupValue.confirmPassword}
+        onChange={(e) => {
+          setSignupValue({
+            ...signupValue,
+            confirmPassword: e.target.value
+          })
+        }}
+        InputLabelProps={{ shrink: true }}
+        type={showPassword ? 'text' : 'password'}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        sx={{ mb: 3 }}
+      />
+      <LoadingButton
+        fullWidth
+        disabled={Boolean(!isLogin && !handleConfirmPassword())}
+        size="large"
+        type="submit"
+        color="inherit"
+        variant="contained"
+        onClick={isLogin ? handleSignIn : handleSignUp}
+      >
+        {isLogin ? "Đăng nhập" : "Đăng ký"}
+      </LoadingButton>
+
+    </Box>
+  );
   return (
     <>
       <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
-        <Typography variant="h5">Sign in</Typography>
-        <Typography variant="body2" color="text.secondary">
-          Don’t have an account?
-          <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-            Get started
-          </Link>
-        </Typography>
+        <Typography variant="h5">Hi user ✌️</Typography>
+
       </Box>
 
-      {renderForm}
+      {isLogin ? renderForm : renderFormSignUp}
 
       <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
         <Typography
           variant="overline"
           sx={{ color: 'text.secondary', fontWeight: 'fontWeightMedium' }}
         >
-          OR
+
         </Typography>
       </Divider>
+      {
+        isLogin && <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
+          <Typography variant="body2" color="text.secondary">
+            Chưa có tài khoản
+            <Button variant="text" disableElevation onClick={() => setIsLogin(pre => !pre)}>
 
-      <Box gap={1} display="flex" justifyContent="center">
-        <IconButton color="inherit">
-          <Iconify icon="logos:google-icon" />
-        </IconButton>
-        <IconButton color="inherit">
-          <Iconify icon="eva:github-fill" />
-        </IconButton>
-        <IconButton color="inherit">
-          <Iconify icon="ri:twitter-x-fill" />
-        </IconButton>
-      </Box>
+              Tạo ngay thôi
+
+            </Button>
+          </Typography>
+
+        </Box>
+      }
+
 
     </>
+
   );
 }

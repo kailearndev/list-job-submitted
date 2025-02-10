@@ -30,6 +30,8 @@ axiosInstance.interceptors.request.use(
         return config;
     },
     (error) => {
+
+
         return Promise.reject(error);
     }
 );
@@ -39,6 +41,8 @@ axiosInstance.interceptors.response.use(function (response) {
     // Do something with response data
     return response.data;
 }, function (error) {
+    console.log(error, "rssponse");
+
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);

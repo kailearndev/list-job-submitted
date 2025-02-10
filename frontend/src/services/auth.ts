@@ -2,7 +2,8 @@ import axiosInstance from "./api"
 
 interface LoginPayload {
     username: string
-    password: string
+    password: string,
+    confirmPassword?: string
 }
 
 const login = async (body: LoginPayload) => {
@@ -14,12 +15,24 @@ const login = async (body: LoginPayload) => {
     }
 
 }
+
+
+const signup = async (body: LoginPayload) => {
+    try {
+        const res = await axiosInstance.post("auth/signup", body)
+
+        return res
+    } catch (error) {
+
+    }
+
+}
 const getMe = async () => {
     try {
         const res = await axiosInstance.get("auth/me")
         return res.data
     } catch (error) {
-
+        throw new error
     }
 
 }
@@ -27,5 +40,6 @@ const getMe = async () => {
 
 export const AuthService = {
     login,
-    getMe
+    getMe,
+    signup
 }
