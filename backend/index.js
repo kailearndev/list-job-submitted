@@ -18,7 +18,23 @@ const app = express()
 // check 
 app.use(morgan("dev"))
 app.use(express.json())
-app.use(cors())
+
+const allowedOrigins = ["https://list-job-fe.vercel.app"];
+
+app.use(
+    cors({
+        origin: function (origin, callback) {
+            // Kiểm tra nếu domain có trong danh sách được phép
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+    })
+);
+
+
 const PORT = process.env.PORT || 9000
 
 //connect db
