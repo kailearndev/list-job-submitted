@@ -21,23 +21,24 @@ app.use(express.json());
 
 
 // Middleware: CORS
-app.use(
-    cors({
-        origin: "*", // Chỉ cho phép frontend từ domain này truy cập
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Các method được phép
-        allowedHeaders: ["Content-Type", "Authorization"], // Các header được phép
-        credentials: true, // Nếu bạn sử dụng cookie hoặc token
-    })
-);
+app.use(cors({
+    origin: 'https://fe.list-job.kaidev.io.vn', // Chỉ cho phép frontend này
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+app.options("*", cors()); // Cho phép tất cả các request OPTIONS
 
 // Handle preflight requests
-app.options("*", cors());
 
 // Connect DB
 dbConnection();
 
 // Routes
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", cors({
+    origin: "https://fe.list-job.kaidev.io.vn", // Domain frontend được phép
+    methods: ["GET", "POST", "PUT", "DELETE"], // Các method được phép
+    allowedHeaders: ["Content-Type", "Authorization"], // Header được phép
+}), authRoutes);
 app.use("/api", middleware([]), companyRoutes);
 app.use("/api", userRoutes);
 app.use("/api", dashboardRoutes);
