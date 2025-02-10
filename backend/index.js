@@ -19,7 +19,7 @@ const app = express()
 app.use(morgan("dev"))
 app.use(express.json())
 const corsOptions = {
-    origin: 'https://list-job-fe.vercel.app/',//(https://your-client-app.com)
+    origin: '*',//(https://your-client-app.com)
     optionsSuccessStatus: 200,
 };
 
