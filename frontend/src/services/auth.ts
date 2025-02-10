@@ -1,3 +1,4 @@
+import axios from "axios"
 import axiosInstance from "./api"
 
 interface LoginPayload {
@@ -7,7 +8,7 @@ interface LoginPayload {
 
 const login = async (body: LoginPayload) => {
     try {
-        const res = await axiosInstance.post("auth/login", body)
+        const res = await axios.post("auth/login", body)
         return res
     } catch (error) {
 
