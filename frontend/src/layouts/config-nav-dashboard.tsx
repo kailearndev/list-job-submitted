@@ -21,27 +21,27 @@ export const navData = [
     role: ["admin"]
   },
   {
-    title: 'Company',
+    title: 'Công Ty',
     path: '/company',
     icon: icon('ic-user'),
     role: ["user"]
   },
-  {
-    title: 'Product',
-    path: '/products',
-    icon: icon('ic-cart'),
-    role: ["admin", "user"],
-    info: (
-      <Label color="error" variant="inverted">
-        +3
-      </Label>
-    ),
-  },
-  {
-    title: 'Blog',
-    path: '/blog',
-    icon: icon('ic-blog'),
-    role: ["admin", "user"],
-  },
+  // {
+  //   title: 'Product',
+  //   path: '/products',
+  //   icon: icon('ic-cart'),
+  //   role: ["admin", "user"],
+  //   info: (
+  //     <Label color="error" variant="inverted">
+  //       +3
+  //     </Label>
+  //   ),
+  // },
+  // {
+  //   title: 'Blog',
+  //   path: '/blog',
+  //   icon: icon('ic-blog'),
+  //   role: ["admin", "user"],
+  // },
 
 ];

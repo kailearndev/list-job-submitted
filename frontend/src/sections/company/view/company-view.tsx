@@ -20,7 +20,7 @@ import { UserTableRow } from '../user-table-row';
 import { emptyRows } from '../utils';
 
 
-import { CircularProgress, Pagination } from '@mui/material';
+import { CircularProgress, Pagination, TableCell, TableRow } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { CompanyService } from 'src/services/company';
@@ -116,10 +116,17 @@ export function CompanyView() {
                     // onSelectRow={() => table.onSelectRow(row.id)}
                     />
                   ))}
-
-
-
-                {!data?.data.length && <TableNoData searchQuery='' />}
+                <TableRow>
+                  <TableCell align="center" colSpan={8}>
+                    {isPending ? <CircularProgress sx={{
+                      mt: 10
+                    }} /> : !data?.data.length && <TableNoData searchQuery='' />}
+                  </TableCell>
+                </TableRow>
+                {/* {isPending ?
+                  <CircularProgress /> :
+                  !data?.data.length && <TableNoData searchQuery='' />
+                } */}
               </TableBody>
             </Table>
           </TableContainer>
