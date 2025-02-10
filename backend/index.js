@@ -19,12 +19,19 @@ app.use(morgan("dev"));
 // Middleware: Parse JSON
 app.use(express.json());
 corsOptions = {
-    origin: ['https://fe.list-job.kaidev.io.vn', 'http://localhost:5173', 'http://localhost:5173'],
+    origin: ['https://fe-ecom-sand.vercel.app', 'http://localhost:5173', 'http://localhost:5173'],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 // Middleware: CORS
-
+app.use(
+    cors({
+        origin: "*", // Chỉ cho phép frontend từ domain này truy cập
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Các method được phép
+        allowedHeaders: ["Content-Type", "Authorization"], // Các header được phép
+        credentials: true, // Nếu bạn sử dụng cookie hoặc token
+    })
+);
 
 // Handle preflight requests
 app.options("*", cors());
@@ -33,7 +40,7 @@ app.options("*", cors());
 dbConnection();
 
 // Routes
-app.use("/api/auth", cors(corsOptions), authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api", middleware([]), companyRoutes);
 app.use("/api", userRoutes);
 app.use("/api", dashboardRoutes);
