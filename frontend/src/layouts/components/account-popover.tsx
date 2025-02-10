@@ -107,7 +107,7 @@ export function AccountPopover({ sx, ...other }: AccountPopoverProps) {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
         <Box sx={{ p: 1 }}>
-          <Button onClick={handleLogout} fullWidth color="info" size="medium" variant="text">
+          <Button onClick={() => { }} fullWidth color="info" size="medium" variant="text">
             Thay đổi thông tin
           </Button>
         </Box>

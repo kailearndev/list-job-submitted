@@ -116,13 +116,18 @@ export function CompanyView() {
                     // onSelectRow={() => table.onSelectRow(row.id)}
                     />
                   ))}
-                <TableRow>
+                {isPending ? <TableRow>
                   <TableCell align="center" colSpan={8}>
-                    {isPending ? <CircularProgress sx={{
+                    <CircularProgress sx={{
                       mt: 10
-                    }} /> : !data?.data.length && <TableNoData searchQuery='' />}
+                    }} />
                   </TableCell>
-                </TableRow>
+                </TableRow> :
+                  !data?.data.length && <TableNoData searchQuery='' />
+                }
+
+
+
                 {/* {isPending ?
                   <CircularProgress /> :
                   !data?.data.length && <TableNoData searchQuery='' />

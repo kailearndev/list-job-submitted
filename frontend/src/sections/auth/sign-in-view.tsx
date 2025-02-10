@@ -14,7 +14,7 @@ import { useRouter } from 'src/routes/hooks';
 import { Iconify } from 'src/components/iconify';
 import { AuthService } from 'src/services/auth';
 import toast from 'react-hot-toast';
-import { Button } from '@mui/material';
+import { Button, Chip, Dialog, DialogActions, Modal, Stack } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +41,7 @@ export function SignInView() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [modalConfirm, setModalConfirm] = useState(false);
 
   const handleSignIn = async () => {
     const response = await AuthService.login(loginValue)
@@ -63,6 +64,17 @@ export function SignInView() {
     return signupValue.password === signupValue.confirmPassword ? true : false
   }
 
+
+  const handleClose = () => {
+    setIsLogin(true)
+    setSignupValue({
+      password: "",
+      confirmPassword: "",
+      username: ""
+    })
+
+    setModalConfirm(false);
+  };
   const handleSignUp = async () => {
     const response: any = await AuthService.signup(signupValue)
 
@@ -70,12 +82,8 @@ export function SignInView() {
       toast.success("Tạo tài khoản thành công ", {
         position: "top-right"
       })
-      setSignupValue({
-        password: "",
-        confirmPassword: "",
-        username: ""
-      })
-      router.push("/login")
+      setModalConfirm(true)
+
     }
 
     else {
@@ -258,7 +266,27 @@ export function SignInView() {
         </Box>
       }
 
+      <Dialog
+        open={modalConfirm}
+        onClose={handleClose}
 
+      >
+        <Box p={4} display={"flex"} justifyContent={"center"} alignItems={"center"} >
+
+          <Typography id="modal-modal-title" variant="h6" component="h2" pt={3}>
+            Tài khoản được tạo thành công✅
+          </Typography>
+
+
+
+        </Box>
+        <DialogActions>
+
+          <Button onClick={handleClose} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog >
     </>
 
   );

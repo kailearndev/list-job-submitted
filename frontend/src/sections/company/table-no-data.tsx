@@ -17,7 +17,7 @@ export function TableNoData({ searchQuery, ...other }: TableNoDataProps) {
       <TableCell align="center" colSpan={8}>
         <Box sx={{ py: 15, textAlign: 'center' }}>
           <Typography variant="h6" sx={{ mb: 1 }}>
-            Hiện không có danh sách công ty đã nộp
+            Hiện không có danh sách công ty đã nộp 🚀
           </Typography>
 
 
