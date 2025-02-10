@@ -18,10 +18,7 @@ app.use(morgan("dev"));
 
 // Middleware: Parse JSON
 app.use(express.json());
-corsOptions = {
-    origin: ['https://fe-ecom-sand.vercel.app', 'http://localhost:5173', 'http://localhost:5173'],
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+
 
 // Middleware: CORS
 app.use(
