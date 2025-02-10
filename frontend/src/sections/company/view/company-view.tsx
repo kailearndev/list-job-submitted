@@ -20,12 +20,12 @@ import { UserTableRow } from '../user-table-row';
 import { emptyRows } from '../utils';
 
 
+import { Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { CompanyService } from 'src/services/company';
 import { TableNoData } from '../table-no-data';
 import ModalRegister from './modal-register';
-import { Pagination, TablePagination } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
