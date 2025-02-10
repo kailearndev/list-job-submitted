@@ -20,7 +20,7 @@ import { UserTableRow } from '../user-table-row';
 import { emptyRows } from '../utils';
 
 
-import { Pagination } from '@mui/material';
+import { CircularProgress, Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { CompanyService } from 'src/services/company';
@@ -121,7 +121,7 @@ export function CompanyView() {
                   height={68}
                   emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
                 />
-
+                {isPending && <CircularProgress />}
                 {!data?.data.length && <TableNoData searchQuery='' />}
               </TableBody>
             </Table>
