@@ -19,6 +19,13 @@
     "nodemon": "^3.1.9"
   },
   "scripts": {
-    "dev": "nodemon --exec node --experimental-modules index.js"
+    "start": "node dist/index.js",
+    "dev": "nodemon --exec node --experimental-modules index.js",
+    "build": "babel src -d dist"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.8",
+    "@babel/preset-env": "^7.26.8"
   }
 }
