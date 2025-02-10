@@ -21,7 +21,7 @@ app.use(express.json())
 
 
 app.use(cors({
-    origin: "*", // Cho phép mọi origin
+    origin: "http://fe.list-job.kaidev.io.vn", // Cho phép mọi origin
 
 }));
 const PORT = process.env.PORT || 9000
