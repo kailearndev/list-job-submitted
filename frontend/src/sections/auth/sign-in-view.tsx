@@ -44,6 +44,11 @@ export function SignInView() {
       router.push("/")
 
     }
+    else {
+      toast.error("Login failed", {
+        position: "top-right"
+      })
+    }
 
   }
 
