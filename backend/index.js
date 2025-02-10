@@ -18,13 +18,12 @@ const app = express()
 // check 
 app.use(morgan("dev"))
 app.use(express.json())
-const corsOptions = {
-    origin: '*',//(https://your-client-app.com)
-    optionsSuccessStatus: 200,
-};
 
-app.use(cors(corsOptions))
 
+app.use(cors({
+    origin: "*", // Cho phép mọi origin
+
+}));
 const PORT = process.env.PORT || 9000
 
 //connect db
